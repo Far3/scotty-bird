@@ -38,7 +38,7 @@ $(function () {
             //update the score when the poles have passed the bird successfully
             if (pole_current_position > container_width - bird_left) {
                 if (score_updated === false) {
-                    score.text(parseInt(score.text()) + 1);
+                    score.text(parseInt(score.text()) + 5);
                     score_updated = true;
                 }
             }
@@ -52,7 +52,7 @@ $(function () {
                 pole_2.css('height', pole_initial_height - new_height);
 
                 //increase speed
-                speed = speed + 1;
+                speed = speed + 3;
                 speed_span.text(speed);
 
                 score_updated = false;
