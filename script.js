@@ -25,88 +25,117 @@ $(function () {
 
     var the_game = setInterval(function () {
 
-        var pole_current_position = parseInt(pole.css('right'));
-        
-        //check whether the poles went out of the container or not
-        if (pole_current_position > container_width) {
-            
-            var new_height = parseInt(Math.random() * 100);
+        if(collision(bird, pole_1) || collision(bird, pole_2) ||  parseInt(bird.css('top')) <= 0 || parseInt(bird.css('top')) >=  container_height - bird_height) {
+            stop_the_game();
 
-            //Change the poles height
-            pole_1.css('height', pole_initial_height + new_height);
-            pole_2.css('height', pole_initial_height - new_height);
+        } else {
 
-            //increase speed
-            speed = speed + 5;
-            speed_span.text(speed);
-            
-            pole_current_position = pole_initial_position;
-        }
+            var pole_current_position = parseInt(pole.css('right'));
 
-        //move the poles
-        pole.css('right', pole_current_position + speed);
+            //check whether the poles went out of the container or not
+            if (pole_current_position > container_width) {
 
-        if (go_up === false) {
-            go_down();
+                var new_height = parseInt(Math.random() * 100);
+
+                //Change the poles height
+                pole_1.css('height', pole_initial_height + new_height);
+                pole_2.css('height', pole_initial_height - new_height);
+
+                //increase speed
+                speed = speed + 5;
+                speed_span.text(speed);
+
+                pole_current_position = pole_initial_position;
+            }
+
+            //move the poles
+            pole.css('right', pole_current_position + speed);
+
+            if (go_up === false) {
+                go_down();
+            }
         }
     }, 40);
 
-    $(document).on('taphold', function(e){
+    $(document).on('taphold', function (e) {
         var taphold = e.type;
         console.log(taphold);
-        if(taphold && go_up === false){
+        if (taphold && go_up === false) {
             go_up = setInterval(up, 25);
         }
     });
 
-    
-    $(document).on('tap', function(e){
+
+    $(document).on('tap', function (e) {
         var tap = e.type;
-        console.log(tap);        
-        if(tap){
+        console.log(tap);
+        if (tap) {
             clearInterval(go_up)
             go_up = false;
         }
     });
 
-    // $(document).on('mousedown', function(e){
-    //     var mouse = e.type;
-    //     if(mouse && go_up === false){
-    //         go_up = setInterval(up, 25);
-    //     }
-    // });
+    $(document).on('mousedown', function (e) {
+        var mouse = e.type;
+        if (mouse && go_up === false) {
+            go_up = setInterval(up, 25);
+        }
+    });
 
-    
-    // $(document).on('mouseup', function(e){
-    //     var mouse = e.type;
-    //     if(mouse){
-    //         clearInterval(go_up)
-    //         go_up = false;
-    //     }
-    // });
 
-    // $(document).on('keydown', function(e){
-    //     var key = e.keyCode;        
-    //     var mouse = e.mouse;
-    //     if(key === 32 && go_up === false){
-    //         go_up = setInterval(up, 25);
-    //     }
-    // });
+    $(document).on('mouseup', function (e) {
+        var mouse = e.type;
+        if (mouse) {
+            clearInterval(go_up)
+            go_up = false;
+        }
+    });
 
-    // $(document).on('keyup', function(e){
-    //     var key = e.keyCode;
-    //     if(key === 32){
-    //         clearInterval(go_up)
-    //         go_up = false;
-    //     }
-    // });
+    $(document).on('keydown', function (e) {
+        var key = e.keyCode;
+        var mouse = e.mouse;
+        if (key === 32 && go_up === false) {
+            go_up = setInterval(up, 25);
+        }
+    });
+
+    $(document).on('keyup', function (e) {
+        var key = e.keyCode;
+        if (key === 32) {
+            clearInterval(go_up)
+            go_up = false;
+        }
+    });
 
     function up() {
         bird.css('top', parseInt(bird.css('top')) - 5);
     }
-    
+
     function go_down() {
         bird.css('top', parseInt(bird.css('top')) + 5);
     }
- 
+
+    function stop_the_game() {
+        clearInterval(the_game);
+        restart_btn.slideDown();
+    }
+
+    function collision($div1, $div2) {
+        var x1 = $div1.offset().left;
+        var y1 = $div1.offset().top;
+        var h1 = $div1.outerHeight(true);
+        var w1 = $div1.outerWidth(true);
+        var b1 = y1 + h1;
+        var r1 = x1 + w1;
+        var x2 = $div2.offset().left;
+        var y2 = $div2.offset().top;
+        var h2 = $div2.outerHeight(true);
+        var w2 = $div2.outerWidth(true);
+        var b2 = y2 + h2;
+        var r2 = x2 + w2;
+
+        if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
+        return true;
+    }
+
 });
