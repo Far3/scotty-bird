@@ -44,14 +44,14 @@ $(function () {
             //check whether the poles went out of the container or not
             if (pole_current_position > container_width) {
 
-                var new_height = parseInt(Math.random() * 100);
+                var new_height = parseInt(Math.random() * 150);
 
                 //Change the poles height
                 pole_1.css('height', pole_initial_height + new_height);
                 pole_2.css('height', pole_initial_height - new_height);
 
                 //increase speed
-                speed = speed + 1;
+                speed = speed + 3;
                 speed_span.text(speed);
 
                 score_update = false;
