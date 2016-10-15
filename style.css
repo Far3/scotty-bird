@@ -65,3 +65,9 @@ p {
 }
 
 
+@media (max-device-width: 768px) {
+    #bird {
+        height: 47px;
+        width: 31px;
+    }
+}
