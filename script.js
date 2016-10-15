@@ -31,7 +31,6 @@ $(function () {
         if (pole_current_position > container_width) {
             
             var new_height = parseInt(Math.random() * 100);
-            console.log(new_height);
 
             //Change the poles height
             pole_1.css('height', pole_initial_height + new_height);
@@ -52,8 +51,27 @@ $(function () {
         }
     }, 40);
 
+    $(document).on('mousedown', function(e){
+        var mouse = e.type;
+        console.log(mouse);
+        if(mouse && go_up === false){
+            go_up = setInterval(up, 25);
+        }
+    });
+
+    
+    $(document).on('mouseup', function(e){
+        var mouse = e.type;
+        console.log(mouse);        
+        if(mouse){
+            clearInterval(go_up)
+            go_up = false;
+        }
+    });
+
     $(document).on('keydown', function(e){
-        var key = e.keyCode;
+        var key = e.keyCode;        
+        var mouse = e.mouse;
         if(key === 32 && go_up === false){
             go_up = setInterval(up, 25);
         }
