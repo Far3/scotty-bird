@@ -51,19 +51,19 @@ $(function () {
         }
     }, 40);
 
-    $(document).on('taphold', function(e){
+    $(document).on('tap', function(e){
         var taphold = e.type;
         console.log(taphold);
-        if(taphold && go_up === false){
+        if(tap && go_up === false){
             go_up = setInterval(up, 25);
         }
     });
 
     
-    $(document).on('taphold', function(e){
+    $(document).on('tap', function(e){
         var taphold = e.type;
         console.log(taphold);        
-        if(taphold){
+        if(tap){
             clearInterval(go_up)
             go_up = false;
         }
