@@ -3,6 +3,9 @@ body {
     width: 100%;
     margin: 0;
 }
+.mobile-directions {
+    display: none;
+}
 p {
     display: inline-block;
     margin: 5px;
@@ -69,5 +72,8 @@ p {
     #bird {
         height: 47px;
         width: 31px;
+    }
+    .mobile-directions {
+        display: inline-block;
     }
 }
