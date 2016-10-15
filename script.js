@@ -18,43 +18,44 @@ $(function () {
     var bird_left = parseInt(bird.css('left'));
     var bird_height = parseInt(bird.height());
     var speed = 10;
-    speed_span.text(speed);
 
-    //other declarations
+    //some other declarations
     var go_up = false;
     var score_updated = false;
+    var game_over = false;
+
 
     var the_game = setInterval(function () {
 
-        if(collision(bird, pole_1) || collision(bird, pole_2) ||  parseInt(bird.css('top')) <= 0 || parseInt(bird.css('top')) >=  container_height - bird_height) {
+        if (collision(bird, pole_1) || collision(bird, pole_2) || parseInt(bird.css('top')) <= 0 || parseInt(bird.css('top')) > container_height - bird_height) {
+
             stop_the_game();
 
         } else {
 
             var pole_current_position = parseInt(pole.css('right'));
 
-            //update the score when the poles have passed the bird
-            if(pole_current_position > container_width - bird_left) {
+            //update the score when the poles have passed the bird successfully
+            if (pole_current_position > container_width - bird_left) {
                 if (score_updated === false) {
-                    score.text(parseInt(score.text()) + 5);
+                    score.text(parseInt(score.text()) + 1);
                     score_updated = true;
                 }
             }
 
-            //check whether the poles went out of the container or not
+            //check whether the poles went out of the container
             if (pole_current_position > container_width) {
+                var new_height = parseInt(Math.random() * 100);
 
-                var new_height = parseInt(Math.random() * 150);
-
-                //Change the poles height
+                //change the pole's height
                 pole_1.css('height', pole_initial_height + new_height);
                 pole_2.css('height', pole_initial_height - new_height);
 
                 //increase speed
-                speed = speed + 3;
+                speed = speed + 1;
                 speed_span.text(speed);
 
-                score_update = false;
+                score_updated = false;
 
                 pole_current_position = pole_initial_position;
             }
@@ -66,20 +67,43 @@ $(function () {
                 go_down();
             }
         }
+
     }, 40);
+
+    $(document).on('keydown', function (e) {
+        var key = e.keyCode;
+        if (key === 32 && go_up === false && game_over === false) {
+            go_up = setInterval(up, 25);
+        }
+    });
+
+    $(document).on('keyup', function (e) {
+        var key = e.keyCode;
+        if (key === 32) {
+            clearInterval(go_up);
+            go_up = false;
+        }
+    });
+
+
+    function go_down() {
+        bird.css('top', parseInt(bird.css('top')) + 5);
+    }
+
+    function up() {
+        bird.css('top', parseInt(bird.css('top')) - 10);
+    }
 
     $(document).on('taphold', function (e) {
         var taphold = e.type;
-        console.log(taphold);
         if (taphold && go_up === false) {
-            go_up = setInterval(up, 25);
+            go_up = setInterval(up, 20);
         }
     });
 
 
     $(document).on('tap', function (e) {
         var tap = e.type;
-        console.log(tap);
         if (tap) {
             clearInterval(go_up)
             go_up = false;
@@ -89,7 +113,7 @@ $(function () {
     $(document).on('mousedown', function (e) {
         var mouse = e.type;
         if (mouse && go_up === false) {
-            go_up = setInterval(up, 25);
+            go_up = setInterval(up, 50);
         }
     });
 
@@ -102,36 +126,13 @@ $(function () {
         }
     });
 
-    $(document).on('keydown', function (e) {
-        var key = e.keyCode;
-        var mouse = e.mouse;
-        if (key === 32 && go_up === false) {
-            go_up = setInterval(up, 25);
-        }
-    });
-
-    $(document).on('keyup', function (e) {
-        var key = e.keyCode;
-        if (key === 32) {
-            clearInterval(go_up)
-            go_up = false;
-        }
-    });
-
-    function up() {
-        bird.css('top', parseInt(bird.css('top')) - 5);
-    }
-
-    function go_down() {
-        bird.css('top', parseInt(bird.css('top')) + 5);
-    }
-
     function stop_the_game() {
         clearInterval(the_game);
+        game_over = true;
         restart_btn.slideDown();
     }
 
-    restart_btn.click(function(){
+    restart_btn.click(function () {
         location.reload();
     });
 
@@ -152,5 +153,7 @@ $(function () {
         if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
         return true;
     }
+
+
 
 });
