@@ -51,19 +51,19 @@ $(function () {
         }
     }, 40);
 
-    $(document).on('tap', function(e){
-        var tap = e.type;
-        console.log(mouse);
-        if(tap && go_up === false){
+    $(document).on('taphold', function(e){
+        var taphold = e.type;
+        console.log(taphold);
+        if(taphold && go_up === false){
             go_up = setInterval(up, 25);
         }
     });
 
     
-    $(document).on('tap', function(e){
-        var tap = e.type;
-        console.log(mouse);        
-        if(mouse){
+    $(document).on('taphold', function(e){
+        var taphold = e.type;
+        console.log(taphold);        
+        if(taphold){
             clearInterval(go_up)
             go_up = false;
         }
@@ -71,7 +71,6 @@ $(function () {
 
     $(document).on('mousedown', function(e){
         var mouse = e.type;
-        console.log(mouse);
         if(mouse && go_up === false){
             go_up = setInterval(up, 25);
         }
@@ -80,7 +79,6 @@ $(function () {
     
     $(document).on('mouseup', function(e){
         var mouse = e.type;
-        console.log(mouse);        
         if(mouse){
             clearInterval(go_up)
             go_up = false;
