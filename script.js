@@ -51,55 +51,55 @@ $(function () {
         }
     }, 40);
 
-    $(document).on('tap', function(e){
+    $(document).on('taphold', function(e){
         var taphold = e.type;
         console.log(taphold);
-        if(tap && go_up === false){
+        if(taphold && go_up === false){
             go_up = setInterval(up, 25);
         }
     });
 
     
     $(document).on('tap', function(e){
-        var taphold = e.type;
-        console.log(taphold);        
+        var tap = e.type;
+        console.log(tap);        
         if(tap){
             clearInterval(go_up)
             go_up = false;
         }
     });
 
-    $(document).on('mousedown', function(e){
-        var mouse = e.type;
-        if(mouse && go_up === false){
-            go_up = setInterval(up, 25);
-        }
-    });
+    // $(document).on('mousedown', function(e){
+    //     var mouse = e.type;
+    //     if(mouse && go_up === false){
+    //         go_up = setInterval(up, 25);
+    //     }
+    // });
 
     
-    $(document).on('mouseup', function(e){
-        var mouse = e.type;
-        if(mouse){
-            clearInterval(go_up)
-            go_up = false;
-        }
-    });
+    // $(document).on('mouseup', function(e){
+    //     var mouse = e.type;
+    //     if(mouse){
+    //         clearInterval(go_up)
+    //         go_up = false;
+    //     }
+    // });
 
-    $(document).on('keydown', function(e){
-        var key = e.keyCode;        
-        var mouse = e.mouse;
-        if(key === 32 && go_up === false){
-            go_up = setInterval(up, 25);
-        }
-    });
+    // $(document).on('keydown', function(e){
+    //     var key = e.keyCode;        
+    //     var mouse = e.mouse;
+    //     if(key === 32 && go_up === false){
+    //         go_up = setInterval(up, 25);
+    //     }
+    // });
 
-    $(document).on('keyup', function(e){
-        var key = e.keyCode;
-        if(key === 32){
-            clearInterval(go_up)
-            go_up = false;
-        }
-    });
+    // $(document).on('keyup', function(e){
+    //     var key = e.keyCode;
+    //     if(key === 32){
+    //         clearInterval(go_up)
+    //         go_up = false;
+    //     }
+    // });
 
     function up() {
         bird.css('top', parseInt(bird.css('top')) - 5);
