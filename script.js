@@ -17,7 +17,7 @@ $(function () {
     var pole_initial_height = parseInt(pole.css('height'));
     var bird_left = parseInt(bird.css('left'));
     var bird_height = parseInt(bird.height());
-    var speed = 50;
+    var speed = 10;
     speed_span.text(speed);
 
     //other declarations
